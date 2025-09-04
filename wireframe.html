@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Wireframe Template</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --section-vertical: 4rem; /* consistent vertical spacing */
+            --box-padding: 1.25rem;   /* padding inside wireframe boxes */
+            --img-height: 180px;      /* image placeholder height */
+            --grid-gap: 1.25rem;      /* consistent gap for grids */
+        }
+
+        /* Custom styles for masonry-like layout using CSS Grid */
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--grid-gap);
+        }
+
+        /* Wireframe styles: borders for placeholders */
+        .wireframe-box {
+            border: 1px solid rgba(107,114,128,0.25);
+            padding: var(--box-padding);
+            text-align: center;
+            background-color: #fafafa;
+            border-radius: 8px;
+        }
+        .wireframe-img {
+            background-color: #eaeaea;
+            height: var(--img-height);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-style: italic;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        /* Global section spacing override to standardize spacing */
+        section {
+            padding-top: var(--section-vertical);
+            padding-bottom: var(--section-vertical);
+        }
+
+        /* Hero background + overlay */
+        .hero-bg {
+            background-image: url('https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            min-height: 100vh; /* ensure hero is full viewport height */
+            display: flex;
+            align-items: center;
+        }
+        .hero-bg::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.35); /* dark overlay to improve text contrast */
+            pointer-events: none;
+            border-radius: 0;
+        }
+
+        /* Responsive heading sizing for better spacing on small screens */
+        .hero-title {
+            font-size: clamp(1.75rem, 4vw, 3rem);
+            line-height: 1.05;
+        }
+        .hero-sub {
+            font-size: clamp(1rem, 2.25vw, 1.25rem);
+        }
+
+        /* Small tweaks for container width and navbar spacing */
+        .container {
+            max-width: 1200px;
+        }
+
+        /* Remove gaps and borders inside the Features section */
+        #features > .grid,
+        #features .grid {
+            gap: 0 !important;
+        }
+        #features .wireframe-box {
+            border: none !important;
+        }
+
+        /* Feature-specific full-bleed images and elevated text */
+        #features .wireframe-box {
+            position: relative;
+            overflow: hidden;
+            padding: 1.25rem; /* keep inner spacing for text */
+            background: transparent;
+            border: none !important;
+            border-radius: 0 !important; /* REMOVED border radius for features section */
+
+            /* FIX: ensure fixed height includes padding and content fits */
+            box-sizing: border-box;          /* include padding in the fixed height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;         /* vertically center feature text */
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        /* FIX: fixed sizes for feature cards */
+        /* large feature card */
+        #features .feature-large {
+            width: 100%;
+            height: 100%;              /* fixed height for main feature */
+            min-height: 320px;
+            max-height: 520px;
+        }
+
+        /* small feature cards in the nested grid */
+        #features .feature-small {
+            width: 100%;
+            height: 220px;              /* fixed height for small feature tiles */
+            min-height: 180px;
+            max-height: 280px;
+        }
+
+        /* make the image fill the entire box */
+        #features .wireframe-box .wireframe-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #eaeaea;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            border-radius: 0;
+            z-index: 0;
+            display: block;
+        }
+
+        /* hide placeholder text inside the absolute image container */
+        #features .wireframe-box .wireframe-img > * { display: none; }
+
+        /* subtle overlay above the image to improve text contrast */
+        #features .wireframe-box::before{
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(0,0,0,0.12), rgba(0,0,0,0.45));
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* place headings/paragraphs above image+overlay */
+        #features .wireframe-box > :not(.wireframe-img) {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+        }
+
+        /* ensure nested grids in features have no gaps */
+        #features .grid { gap: 0 !important; }
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans">
+
+    <!-- Header with Navbar -->
+    <header class="bg-gray-200 shadow-md">
+        <nav class="container mx-auto px-6 py-5 flex justify-between items-center"> <!-- increased horizontal padding -->
+            <a href="#" class="text-2xl font-bold">Store Logo</a>
+            <ul class="flex space-x-6">
+                <li><a href="#hero" class="hover:text-gray-600">Home</a></li>
+                <li><a href="#features" class="hover:text-gray-600">Features</a></li>
+                <li><a href="#new-arrivals" class="hover:text-gray-600">New Arrivals</a></li>
+                <li><a href="#all-products" class="hover:text-gray-600">All Products</a></li>
+                <li><a href="#testimonials" class="hover:text-gray-600">Testimonials</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-bg h-screen px-6 text-white"> <!-- added horizontal padding and removed direct flex here to use hero-bg flex -->
+        <div class="container mx-auto text-center relative z-10">
+            <h1 class="hero-title font-bold mb-4">Hero Headline</h1>
+            <p class="hero-sub mb-6">Subheadline or call to action</p>
+            <a href="#new-arrivals" class="inline-block bg-gray-800 bg-opacity-60 text-white px-6 py-3 rounded hover:bg-opacity-80">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Feature Section -->
+    <section id="features" class="container mx-auto px-4 py-16"> <!-- standardized vertical padding -->
+        <h2 class="text-3xl font-bold text-center mb-8">Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6"> <!-- improved gap -->
+            <!-- Big solo box -->
+            <div class="wireframe-box feature-large col-span-1">
+                <div class="wireframe-img" style="background-image: url('https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg');"></div>
+                <h3 class="text-2xl font-semibold mb-4">Main Feature</h3>
+                <p>Description of the main feature.</p>
+            </div>
+            <!-- Nested 4-box grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6"> <!-- improved gap -->
+                <div class="wireframe-box feature-small">
+                    <div class="wireframe-img" style="background-image: url('https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg');"></div>
+                    <h4 class="text-xl font-semibold">Feature 1</h4>
+                    <p>Short description.</p>
+                </div>
+                <div class="wireframe-box feature-small">
+                    <div class="wireframe-img" style="background-image: url('https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg');"></div>
+                    <h4 class="text-xl font-semibold">Feature 2</h4>
+                    <p>Short description.</p>
+                </div>
+                <div class="wireframe-box feature-small">
+                    <div class="wireframe-img" style="background-image: url('https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg');"></div>
+                    <h4 class="text-xl font-semibold">Feature 3</h4>
+                    <p>Short description.</p>
+                </div>
+                <div class="wireframe-box feature-small">
+                    <div class="wireframe-img" style="background-image: url('https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg');"></div>
+                    <h4 class="text-xl font-semibold">Feature 4</h4>
+                    <p>Short description.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals Section -->
+    <section id="new-arrivals" class="container mx-auto px-4 py-16 bg-gray-100"> <!-- standardized vertical padding -->
+        <h2 class="text-3xl font-bold text-center mb-8">New Arrivals</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 1</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 2</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 3</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 4</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 5</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 6</h3>
+                <p>$Price</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Products Section (Masonry-like Grid with 8x8=64 items) -->
+    <section id="all-products" class="container mx-auto px-4 py-16"> <!-- standardized vertical padding -->
+        <h2 class="text-3xl font-bold text-center mb-8">All Products</h2>
+        <!-- Search Bar and Filters -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+            <input type="text" placeholder="Search all products..." class="wireframe-box w-full md:w-1/3 p-3 rounded">
+            <div class="flex flex-wrap space-x-2 gap-2">
+                <select class="wireframe-box p-2 rounded">
+                    <option>Category</option>
+                    <option>Electronics</option>
+                    <option>Clothing</option>
+                </select>
+                <select class="wireframe-box p-2 rounded">
+                    <option>Price Range</option>
+                    <option>Under $50</option>
+                    <option>$50 - $100</option>
+                </select>
+                <select class="wireframe-box p-2 rounded">
+                    <option>Sort By</option>
+                    <option>Price Low to High</option>
+                    <option>Price High to Low</option>
+                </select>
+            </div>
+        </div>
+        <div class="masonry-grid">
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 1</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 2</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 3</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 4</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 5</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 6</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 7</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 8</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 9</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 10</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 11</h3>
+                <p>$Price</p>
+            </div>
+            <div class="wireframe-box">
+                <div class="wireframe-img">Product Image</div>
+                <h3 class="font-semibold">Product 12</h3>
+                <p>$Price</p>
+            </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-gray-200 py-8"> <!-- slightly larger footer padding -->
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6">
+            <p>Store Name © 2025</p>
+            <div class="flex space-x-4">
+                <a href="#" class="hover:text-gray-600">Twitter</a>
+                <a href="#" class="hover:text-gray-600">Facebook</a>
+                <a href="#" class="hover:text-gray-600">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
